@@ -1,6 +1,14 @@
 package com.example.mapofitness.screens.profile
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,8 +33,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.mapofitness.data.local.entity.UserManager
 import com.example.mapofitness.R
+import com.example.mapofitness.data.local.entity.UserManager
 import com.example.mapofitness.theme.GrassGreen
 import com.example.mapofitness.theme.LightPurple
 import com.example.mapofitness.theme.NavyBlue
@@ -34,7 +42,8 @@ import com.example.mapofitness.theme.NavyBlue
 
 @Composable
 fun ProfileScreen(
-    onSignOut: () -> Unit
+    onSignOut: () -> Unit,
+    onPersonalInfo: () -> Unit
 ) {
     val scrollState = rememberScrollState()
     Column(
@@ -56,7 +65,7 @@ fun ProfileScreen(
             }
 
         }
-        val userData = UserManager.currentUser
+        val userData = UserManager.currentUser.value
         if(userData?.profilePictureUrl != null) {
             AsyncImage(
                 model = userData.profilePictureUrl,
@@ -83,7 +92,10 @@ fun ProfileScreen(
             totalCalories = 0,
             totalRewards = 0
         )
+        PersonalInfoButton(onPersonalInfo)
+        Spacer(modifier = Modifier.weight(1f))
         SignOutButton(onSignOut)
+        Spacer(modifier = Modifier.weight(0.5f))
     }
 }
 
@@ -129,5 +141,17 @@ fun SignOutButton(onSignOut: () -> Unit){
         shape = RoundedCornerShape(16.dp)
     ) {
         Text(text = "Sign out")
+    }
+}
+
+@Composable
+fun PersonalInfoButton(onPersonalInfo: () -> Unit){
+    Button(
+        modifier = Modifier.
+        fillMaxWidth(),
+        onClick = onPersonalInfo,
+        shape = RoundedCornerShape(16.dp)
+    ){
+        Text(text = "Personal Information")
     }
 }

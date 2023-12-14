@@ -25,9 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
-enum class BottomTab(val route: String, val icon: ImageVector, val label: String) {
-    Home("home", Icons.Filled.Home, "Home"),
-    Profile("profile", Icons.Filled.Person, "Profile")
+enum class BottomTab(val route: String, val icon: ImageVector, val label: String, val isTab: Boolean) {
+    Home("home", Icons.Filled.Home, "Home", true),
+    Profile("profile", Icons.Filled.Person, "Profile", true)
 }
 @Composable
 fun NavigationBar(navController: NavController){
@@ -86,7 +86,7 @@ object TopEdgeShape : Shape {
     ): Outline {
         val path = Path().apply {
             moveTo(0f, 0f)
-            lineTo(size.width, 0.2f)
+            lineTo(size.width, 1f)
         }
         return Outline.Generic(path)
     }

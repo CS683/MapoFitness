@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "105827151970",
+    "project_id": "mapofitness",
+    "storage_bucket": "mapofitness.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:105827151970:android:58d045aa4bec5e3a3e613b",
+        "android_client_info": {
+          "package_name": "com.example.mapofitness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "105827151970-g415rt05um43mh2q6c3a5gml663j0p0r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mapofitness",
+            "certificate_hash": "3ef3df518fecbe9a246f4d4566eadf0275f61eee"
+          }
+        },
+        {
+          "client_id": "105827151970-armfegrn2ta7p1cofj6op2d9ll6ho0dd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX3Xztzq1VUsxIUQpzFH8pZjBhc4V6Ei4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "105827151970-armfegrn2ta7p1cofj6op2d9ll6ho0dd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

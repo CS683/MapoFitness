@@ -10,7 +10,10 @@ val DarkColorPalette = darkColorScheme(
     primary = SkyBlue,
     onPrimary = Dark,
     background = Dark,
-    onSurface = White
+    onSurface = White,
+    secondary = SkyBlue,
+    onSecondary = DarkGray,
+    onPrimaryContainer = White
 )
 
 val LightColorPalette = lightColorScheme(
