@@ -30,6 +30,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.mapofitness.screens.activity.ActivityScreen
+import com.example.mapofitness.screens.activity.ActivityViewModel
+import com.example.mapofitness.screens.dashboard.DashboardViewModel
 import com.example.mapofitness.screens.home.AddWeightBottomSheetContent
 import com.example.mapofitness.screens.home.HomeScreen
 import com.example.mapofitness.screens.home.HomeViewModel
@@ -39,7 +42,9 @@ import com.example.mapofitness.screens.login.SignInViewModel
 import com.example.mapofitness.screens.navigation_bar.BottomTab
 import com.example.mapofitness.screens.navigation_bar.NavigationBar
 import com.example.mapofitness.screens.profile.PersonalInfoScreen
+import com.example.mapofitness.screens.profile.PersonalInfoViewModel
 import com.example.mapofitness.screens.profile.ProfileScreen
+import com.example.mapofitness.screens.profile.ProfileViewModel
 import com.example.mapofitness.screens.start.StartScreen
 import com.example.mapofitness.theme.Dark
 import com.example.mapofitness.theme.MapoFitnessTheme
@@ -151,6 +156,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(BottomTab.Profile.route) {
+                            val viewModel = viewModel<ProfileViewModel>()
                             ProfileScreen(
                                 onSignOut = {
                                     lifecycleScope.launch {
@@ -164,16 +170,32 @@ class MainActivity : ComponentActivity() {
                                         navController.navigate("login")
                                     }
                                 },
-                                onPersonalInfo = { navController.navigate("personalInfo") }
+                                onPersonalInfo = { navController.navigate("personalInfo") },
+                                viewModel
                             )
                         }
                         composable(BottomTab.Home.route){
-                            HomeScreen(homeViewModel, addWeightSheetState)
+                            val dashboardViewModel = viewModel<DashboardViewModel>()
+                            HomeScreen(
+                                homeViewModel,
+                                dashboardViewModel,
+                                addWeightSheetState,
+                                onActivity = { navController.navigate("activity") }
+                            )
                         }
                         composable("navigationbar"){ NavigationBar(navController) }
                         composable("personalInfo"){
+                            val persoanlInfoViewModel = viewModel<PersonalInfoViewModel>()
                             PersonalInfoScreen(
-                                onBack = { navController.navigate(BottomTab.Profile.route)}
+                                onBack = { navController.navigate(BottomTab.Profile.route) },
+                                persoanlInfoViewModel
+                            )
+                        }
+                        composable("activity") {
+                            val activityViewModel = viewModel<ActivityViewModel>()
+                            ActivityScreen(
+                                onBack = { navController.navigate(BottomTab.Home.route) },
+                                activityViewModel
                             )
                         }
                     }

@@ -18,7 +18,7 @@ fun BottomSheetContainer(content: @Composable () -> Unit) {
         modifier = Modifier
         .fillMaxWidth()
         .padding(8.dp)
-        .height(300.dp)
+        .height(250.dp)
         .background(
             color = Dark,
             shape = RoundedCornerShape(10.dp)

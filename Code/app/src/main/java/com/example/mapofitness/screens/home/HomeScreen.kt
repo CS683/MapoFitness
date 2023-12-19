@@ -37,6 +37,8 @@ import com.example.mapofitness.common.composable.MajorContainer
 import com.example.mapofitness.data.local.entity.User
 import com.example.mapofitness.data.local.entity.UserManager
 import com.example.mapofitness.data.local.entity.WeightRecord
+import com.example.mapofitness.screens.dashboard.DashboardScreen
+import com.example.mapofitness.screens.dashboard.DashboardViewModel
 import com.example.mapofitness.theme.Dark
 import com.example.mapofitness.theme.GrassGreen
 import com.example.mapofitness.theme.White
@@ -52,27 +54,28 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeScreen(viewModel: HomeViewModel, addWeightSheetState: ModalBottomSheetState){
+fun HomeScreen(homeViewModel: HomeViewModel, dashboardViewModel: DashboardViewModel, addWeightSheetState: ModalBottomSheetState, onActivity: () -> Unit){
     val userData = UserManager.currentUser.value
     val isLoading = remember { mutableStateOf(true)}
-    viewModel.fetchWeight()
-    viewModel.fetchRecentWeightRecords()
     LaunchedEffect(key1 = true) {
         UserManager.fetchUserData()
         isLoading.value = false
     }
-    ChildHomeScreen(userData = userData, isLoading = isLoading.value, viewModel, addWeightSheetState)
+    ChildHomeScreen(userData = userData, isLoading = isLoading.value, homeViewModel, dashboardViewModel, addWeightSheetState, onActivity)
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ChildHomeScreen(userData: User?, isLoading: Boolean, viewModel: HomeViewModel, addWeightSheetState: ModalBottomSheetState) {
-    val weightRecords by viewModel.weightRecords.collectAsState()
-    val weight by viewModel.weight.collectAsState()
+fun ChildHomeScreen(userData: User?, isLoading: Boolean, homeViewModel: HomeViewModel, dashboardViewModel: DashboardViewModel, addWeightSheetState: ModalBottomSheetState, onActivity: () -> Unit) {
+    val weightRecords by homeViewModel.weightRecords.collectAsState()
+    val weight by homeViewModel.weight.collectAsState()
     val scrollState = rememberScrollState()
     val coroutineScope = rememberCoroutineScope()
+
+    homeViewModel.fetchWeight()
+    homeViewModel.fetchRecentWeightRecords()
 
     if(isLoading){
         CircularProgressIndicator(color = White)
@@ -117,6 +120,11 @@ fun ChildHomeScreen(userData: User?, isLoading: Boolean, viewModel: HomeViewMode
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.heightIn(16.dp))
+
+
+            DashboardScreen(dashboardViewModel)
 
             Spacer(modifier = Modifier.heightIn(16.dp))
 
@@ -176,7 +184,8 @@ fun ChildHomeScreen(userData: User?, isLoading: Boolean, viewModel: HomeViewMode
                     LineChartComposable(weightRecords = weightRecords)
                 }
             }
-
+            Spacer(modifier = Modifier.height(16.dp))
+            WorkOutComponent(onActivity)
 
         }
     }
@@ -259,7 +268,7 @@ fun AddWeightBottomSheetContent(onDismiss: () -> Unit, homeViewModel: HomeViewMo
 
 
 @Composable
-fun WeightSlider(now: String, homeViewModel: HomeViewModel) {
+fun WeightSlider(now: String, viewModel: HomeViewModel) {
     var sliderPosition by remember { mutableStateOf(100f) }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -301,7 +310,7 @@ fun WeightSlider(now: String, homeViewModel: HomeViewModel) {
         )
         Spacer(modifier = Modifier.weight(1f))
         Button(
-           onClick = { onAddWeight(now, sliderPosition, homeViewModel) }
+           onClick = { onAddWeight(now, sliderPosition, viewModel) }
         ){
             Text("Save", color = Dark)
         }
@@ -312,9 +321,10 @@ fun WeightSlider(now: String, homeViewModel: HomeViewModel) {
 
 fun onAddWeight(now: String, sliderPosition: Float, homeViewModel: HomeViewModel){
     val weightRecord = WeightRecord(now, sliderPosition)
-    UserManager.setWeight(sliderPosition)
-    UserManager.setUserData()
     UserManager.addWeightRecord(weightRecord)
+    UserManager.setWeight(sliderPosition)
+    UserManager.getWeightRecordCount()?.plus(1)?.let { UserManager.setWeightRecordCount(it) }
+    UserManager.setUserData()
     homeViewModel.updateweight(sliderPosition)
     homeViewModel.fetchRecentWeightRecords()
 }

@@ -20,9 +20,7 @@ class PersonalInfoViewModel : ViewModel() {
     val weight: StateFlow<Float> = _weight
 
     init {
-        if(UserManager.getGender() != null) {
-            fetchGender()
-        }
+        fetchGender()
         if(UserManager.getDOB() != null) {
             fetchDOB()
         }
@@ -35,7 +33,7 @@ class PersonalInfoViewModel : ViewModel() {
     }
 
     private fun fetchGender() {
-        _gender.value = UserManager.getGender()!!
+        _gender.value = UserManager.getGender()
     }
 
     private fun fetchDOB() {

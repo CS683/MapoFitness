@@ -26,9 +26,11 @@ import com.example.mapofitness.common.composable.SaveButton
 import com.example.mapofitness.data.local.entity.UserManager
 import com.example.mapofitness.theme.Dark
 import com.example.mapofitness.theme.SkyBlue
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 @Composable
-fun DOBBottomSheet(onDismiss: () -> Unit) {
+fun DOBBottomSheet(onDismiss: () -> Unit, viewModel: PersonalInfoViewModel) {
     BottomSheetContainer {
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -40,13 +42,13 @@ fun DOBBottomSheet(onDismiss: () -> Unit) {
                 modifier = Modifier.fillMaxSize()
             ) {
                 var day by remember {
-                    mutableStateOf(1)
+                    mutableStateOf(getDay(UserManager.getDOB()) ?: 1)
                 }
                 var month by remember {
-                    mutableStateOf(1)
+                    mutableStateOf(getMonth(UserManager.getDOB()) ?: 1)
                 }
                 var year by remember {
-                    mutableStateOf(2023)
+                    mutableStateOf(getYear(UserManager.getDOB()) ?: 2023)
                 }
                 var lastDayInMonth by remember {
                     mutableStateOf(30)
@@ -81,7 +83,7 @@ fun DOBBottomSheet(onDismiss: () -> Unit) {
                         width = 100.dp,
                         itemHeight = 40.dp,
                         items = listOf("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"), //(1..30).map { it.toString() },
-                        initialItem = "December",
+                        initialItem = month,
                         textStyle = TextStyle(fontSize = 13.sp),
                         textColor = Color.LightGray,
                         selectedTextColor = SkyBlue,
@@ -94,7 +96,7 @@ fun DOBBottomSheet(onDismiss: () -> Unit) {
                         width = 50.dp,
                         itemHeight = 40.dp,
                         items = (1900..2023).toList(),
-                        initialItem = 2023,
+                        initialItem = year,
                         textStyle = TextStyle(fontSize = 13.sp),
                         textColor = Color.LightGray,
                         selectedTextColor = SkyBlue,
@@ -106,7 +108,7 @@ fun DOBBottomSheet(onDismiss: () -> Unit) {
 
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                SaveButton{ onSave(day, month, year) }
+                SaveButton{ onSave(day, month, year, viewModel, onDismiss) }
             }
         }
 
@@ -114,12 +116,53 @@ fun DOBBottomSheet(onDismiss: () -> Unit) {
 
 }
 
-private fun onSave(day: Int, month: Int, year: Int) {
+private fun onSave(day: Int, month: Int, year: Int, viewModel: PersonalInfoViewModel, onDismiss: () -> Unit) {
     val dob = formatDate(year, month, day)
     UserManager.setDOB(dob)
+    UserManager.setUserData()
+    viewModel.updateDOB(dob)
+    onDismiss()
 }
 
 fun formatDate(year: Int, month: Int, day: Int): String {
     return String.format("%04d-%02d-%02d", year, month, day)
+}
+
+fun getYear(dateString: String?): Int? {
+    if(dateString == null){
+        return null
+    }
+    val format = SimpleDateFormat("yyyy-MM-dd")
+    val date = format.parse(dateString)
+    val calendar = Calendar.getInstance().apply {
+        time = date
+    }
+
+    return calendar.get(Calendar.YEAR)
+}
+
+fun getMonth(dateString: String?): Int? {
+    if(dateString == null){
+        return null
+    }
+    val format = SimpleDateFormat("yyyy-MM-dd")
+    val date = format.parse(dateString)
+    val calendar = Calendar.getInstance().apply {
+        time = date
+    }
+    return calendar.get(Calendar.MONTH) + 1
+}
+
+fun getDay(dateString: String?): Int? {
+    if(dateString == null){
+        return null
+    }
+    val format = SimpleDateFormat("yyyy-MM-dd")
+    val date = format.parse(dateString)
+    val calendar = Calendar.getInstance().apply {
+        time = date
+    }
+
+    return calendar.get(Calendar.DAY_OF_MONTH)
 }
 

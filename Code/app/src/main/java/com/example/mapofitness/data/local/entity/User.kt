@@ -22,7 +22,11 @@ data class User(
     var dob: String? = null,
     var gender: Gender = Gender.UNKNOWN,
     var weight: Float? = null,
-    var height: Float? = null
+    var height: Float? = null,
+    var calorieBurned: Float = 0f,
+    var totalWorkout: Int = 0,
+    var daysStreak: Int = 0,
+    var weightRecordCount: Int = 0
     // Add other fields relevant to your user
 ){
     fun toMap(): Map<String, Any?> {
@@ -34,7 +38,11 @@ data class User(
             "dob" to dob,
             "gender" to gender.name,
             "weight" to weight,
-            "height" to height
+            "height" to height,
+            "calorieBurned" to calorieBurned,
+            "totalWorkout" to totalWorkout,
+            "daysStreak" to daysStreak,
+            "weightRecordCount" to weightRecordCount
         )
     }
 }
@@ -48,6 +56,36 @@ object UserManager {
     private fun setUser(user: User) {
         _currentUser.value = user
     }
+    fun getWeightRecordCount(): Int? {
+        return _currentUser.value?.weightRecordCount
+    }
+
+    fun setWeightRecordCount(weightRecordCount: Int) {
+        _currentUser.value?.weightRecordCount = weightRecordCount
+    }
+    fun getTotalWorkout(): Int? {
+        return _currentUser.value?.totalWorkout
+    }
+
+    fun setTotalWorkout(totalWorkout: Int) {
+        _currentUser.value?.totalWorkout = totalWorkout
+    }
+
+    fun getDaysStreak(): Int? {
+        return _currentUser.value?.daysStreak
+    }
+
+    fun setDaysSteak(daysStreak: Int) {
+        _currentUser.value?.daysStreak = daysStreak
+    }
+
+    fun getCalorieBurned(): Float? {
+        return _currentUser.value?.calorieBurned
+    }
+
+    fun setCalorieBurned(calorieBurned: Float) {
+        _currentUser.value?.calorieBurned = calorieBurned
+    }
 
     fun getDOB(): String? {
         return _currentUser.value?.dob
@@ -57,8 +95,8 @@ object UserManager {
         _currentUser.value?.dob = dob
     }
 
-    fun getGender(): Gender? {
-        return _currentUser.value?.gender
+    fun getGender(): Gender {
+        return _currentUser.value?.gender ?: Gender.UNKNOWN
     }
 
     fun setGender(gender: Gender) {
@@ -126,6 +164,36 @@ object UserManager {
             Log.i("Info", "Current user is: ${UserManager.currentUser.value?.username}")
         }.addOnFailureListener {
             Log.e("Firebase", "Error fetching user data")
+        }
+    }
+
+    fun fetchActivity(callback: (List<Activity>) -> Unit) {
+        val activityRef = FirebaseDatabase.getInstance().getReference("workout")
+        activityRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val activities = snapshot.children.mapNotNull { it.getValue(Activity::class.java) }
+                callback(activities)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w("DatabaseError", "loadPost:onCancelled", databaseError.toException())
+            }
+        })
+    }
+
+    fun addActivityRecord(activityRecord: ActivityRecord) {
+        val userId = _currentUser.value?.userId
+        val databaseReference = FirebaseDatabase.getInstance().getReference("users/$userId/activityRecords")
+        val recordId = databaseReference.push().key // Generates a unique ID for the record
+
+        recordId?.let {
+            databaseReference.child(it).setValue(activityRecord)
+                .addOnSuccessListener {
+                    Log.i("DB", "Add Activity Record Successful")
+                }
+                .addOnFailureListener {
+                    Log.i("DB", "Error Add Weight Record")
+                }
         }
     }
 

@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,23 +35,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.mapofitness.common.composable.BottomSheetContainer
-import com.example.mapofitness.common.composable.BottomSheetTitle
 import com.example.mapofitness.common.composable.MajorContainer
 import com.example.mapofitness.data.local.entity.Gender
-import com.example.mapofitness.data.local.entity.UserManager
 import com.example.mapofitness.theme.Dark
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun PersonalInfoScreen(
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    viewModel: PersonalInfoViewModel
 ) {
     var currentBottomSheet by remember { mutableStateOf(PersonalInfoBottomSheetType.NONE) }
     val bottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val coroutineScope = rememberCoroutineScope()
-    val user = UserManager.currentUser.value
+
+    val gender by viewModel.gender.collectAsState()
+    val dob by viewModel.dob.collectAsState()
+    val height by viewModel.height.collectAsState()
+    val weight by viewModel.weight.collectAsState()
+
     Column {
         TopAppBar(
             title = { Text("Personal Information") },
@@ -68,10 +72,10 @@ fun PersonalInfoScreen(
             sheetState = bottomSheetState,
             sheetContent = {
                 when (currentBottomSheet) {
-                    PersonalInfoBottomSheetType.GENDER -> GenderBottomSheet(onDismiss = {coroutineScope.launch { bottomSheetState.hide() }})
-                    PersonalInfoBottomSheetType.DOB -> DOBBottomSheet(onDismiss = {coroutineScope.launch { bottomSheetState.hide() }})
-                    PersonalInfoBottomSheetType.HEIGHT -> HeightBottomSheet(onDismiss = {coroutineScope.launch { bottomSheetState.hide() }})
-                    PersonalInfoBottomSheetType.WEIGHT -> WeightBottomSheet(onDismiss = {coroutineScope.launch { bottomSheetState.hide() }})
+                    PersonalInfoBottomSheetType.GENDER -> GenderBottomSheet(onDismiss = {coroutineScope.launch { bottomSheetState.hide() }}, viewModel)
+                    PersonalInfoBottomSheetType.DOB -> DOBBottomSheet(onDismiss = {coroutineScope.launch { bottomSheetState.hide() }}, viewModel)
+                    PersonalInfoBottomSheetType.HEIGHT -> HeightBottomSheet(onDismiss = {coroutineScope.launch { bottomSheetState.hide() }}, viewModel)
+                    PersonalInfoBottomSheetType.WEIGHT -> WeightBottomSheet(onDismiss = {coroutineScope.launch { bottomSheetState.hide() }}, viewModel)
                     else -> {}
                 }
             },
@@ -85,12 +89,10 @@ fun PersonalInfoScreen(
             ) {
                 MajorContainer {
                     LazyColumn {
-                        val height = if (user?.height != null) user.height else ""
-                        val weight = if (user?.weight != null) user.weight else ""
                         item {
                             SettingItem(
                                 label = "Gender",
-                                value = if (user?.gender == Gender.UNKNOWN) "" else user?.gender.toString()
+                                value = if (gender == Gender.UNKNOWN) "" else gender.toString()
                             ) {
                                 coroutineScope.launch {
                                     currentBottomSheet = PersonalInfoBottomSheetType.GENDER
@@ -101,7 +103,7 @@ fun PersonalInfoScreen(
                         item {
                             SettingItem(
                                 label = "Date of Birth",
-                                value = if (user?.dob == null) "" else user.dob!!
+                                value = dob
                             ) {
                                 coroutineScope.launch {
                                     currentBottomSheet = PersonalInfoBottomSheetType.DOB
@@ -112,7 +114,7 @@ fun PersonalInfoScreen(
                         item {
                             SettingItem(
                                 label = "Height",
-                                value = "$height cm"
+                                value = if (height == 0f) " cm" else String.format("%.1f cm", height)
                             ) {
                                 coroutineScope.launch {
                                     currentBottomSheet = PersonalInfoBottomSheetType.HEIGHT
@@ -123,7 +125,7 @@ fun PersonalInfoScreen(
                         item {
                             SettingItem(
                                 label = "Weight",
-                                value = "$weight lbs"
+                                value = if (weight == 0f) " lbs" else String.format("%.1f lbs", weight)
                             ) {
                                 coroutineScope.launch {
                                     currentBottomSheet = PersonalInfoBottomSheetType.WEIGHT
@@ -165,27 +167,6 @@ enum class PersonalInfoBottomSheetType {
     DOB,
     HEIGHT,
     WEIGHT
-}
-
-@Composable
-fun GenderBottomSheet(onDismiss: () -> Unit) {
-    BottomSheetContainer {
-        BottomSheetTitle(onDismiss = onDismiss, textValue = "Gender")
-    }
-}
-
-@Composable
-fun HeightBottomSheet(onDismiss: () -> Unit) {
-    BottomSheetContainer {
-        BottomSheetTitle(onDismiss = onDismiss, textValue = "Height")
-    }
-}
-
-@Composable
-fun WeightBottomSheet(onDismiss: () -> Unit) {
-    BottomSheetContainer {
-        BottomSheetTitle(onDismiss = onDismiss, textValue = "Weight")
-    }
 }
 
 

@@ -1,5 +1,7 @@
 package com.example.mapofitness.screens.profile
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +23,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,11 +44,22 @@ import com.example.mapofitness.theme.LightPurple
 import com.example.mapofitness.theme.NavyBlue
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ProfileScreen(
     onSignOut: () -> Unit,
-    onPersonalInfo: () -> Unit
+    onPersonalInfo: () -> Unit,
+    viewModel: ProfileViewModel
 ) {
+    val totalWorkout by viewModel.totalWorkout.collectAsState()
+    val calorieBurned by viewModel.calorieBurned.collectAsState()
+    val weightRecordCount by viewModel.weightRecordsCount.collectAsState()
+
+    viewModel.fetchTotalWorkout()
+    viewModel.fetchCalorieBurned()
+    viewModel.fetchWeightRecordCount()
+
+
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -88,9 +103,9 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.height(16.dp))
         }
         StatsSection(
-            totalWorkouts = 0,
-            totalCalories = 0,
-            totalRewards = 0
+            totalWorkouts = totalWorkout,
+            totalCalories = calorieBurned,
+            weightRecordCount = weightRecordCount
         )
         PersonalInfoButton(onPersonalInfo)
         Spacer(modifier = Modifier.weight(1f))
@@ -102,7 +117,7 @@ fun ProfileScreen(
 
 
 @Composable
-fun StatsSection(totalWorkouts: Int, totalCalories: Int, totalRewards: Int) {
+fun StatsSection(totalWorkouts: Int, totalCalories: Float, weightRecordCount: Int) {
     Column(modifier = Modifier.padding(16.dp)) {
         Text(text = "My statistics", style = MaterialTheme.typography.titleLarge)
         Row(modifier = Modifier
@@ -111,8 +126,8 @@ fun StatsSection(totalWorkouts: Int, totalCalories: Int, totalRewards: Int) {
             horizontalArrangement = Arrangement.SpaceBetween
         ){
             StatItem(label = "Workouts total", value = totalWorkouts.toString(), R.drawable.chart_bar, LightPurple)
-            StatItem(label = "Calories burnt", value = totalCalories.toString(), R.drawable.fire, NavyBlue)
-            StatItem(label = "Days Streak", value = totalRewards.toString(), R.drawable.streak, GrassGreen)
+            StatItem(label = "Calories burned", value = String.format("%.1f", totalCalories), R.drawable.fire, NavyBlue)
+            StatItem(label = "Weight Records Total", value = weightRecordCount.toString(), R.drawable.streak, GrassGreen)
         }
     }
 }
