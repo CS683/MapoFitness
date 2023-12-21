@@ -3,20 +3,6 @@
 <h3 align="center">Shanghua Yang</h3>
 
 
-- This is the template of your final project report. As this document
-  will be constantly updated during the semester, please enable the
-  “track changes” in your doc. Or if you prefer to use the md file, we
-  can also see the change in the commit history.
-
-- Please name your report as CS683\_\<Last Name\>\<First
-  Name\>\_\<ProjectTitle\>. It can be either a PDF or Word document.
-
-- Make sure to push all your code into your github repository, create a
-  release/tag and submit the link on blackboard.
-
-- Please provide your feedback in the “Add comments” section when
-  submitting your report. Thanks!
-
 **[Overview](#overview) [2](#overview)**
 
 **[Related Work](#related-work) [2](#related-work)**
@@ -38,32 +24,13 @@
 
 # Overview 
 
-> The application I want to develop is a fitness and nutrition apps.
+The application I want to develop is a fitness and nutrition app. The reason that I want to do this is because I work out a lot and I would like to track my nutrition consumption, calories consumption, physical indicator and work out records etc. However, applications on the market do not fully fulfill my requirements. The target customers of most applications are for normal people instead of athletes or advanced bodybuilders, so for my application, my target customers would be both normal people, bodybuilders, and vegan if I implement the diet feature. 
 
 # Related Work
 
-The application I want to develop is a fitness and nutrition app. The reason that I want to do this is because I work out a lot and I would like to track my nutrition consumption, calories consumption, physical indicator and work out records etc. However, applications on the market do not fully fulfill my requirements. The target customers of most applications are for normal people instead of athletes or advanced bodybuilders, so for my application, my target customers would be both normal people, bodybuilders, and vegan if I implement the diet feature. 
+The applications that I found online are Fitbit and Myfitness Pal. Both applications have the calories tracker feature which will also be in my application. For Fitbit, it focuses more on work out records that includes calorie consumption, BPM and time. For MyFitnessPal, it focuses more on food consumption and nutrition calculation. My application will combine these two applications and includes all features that I mentioned above. In addition to these features, I would like to provide weight records and work out records to my customers based on their goals and physical indicators. However, I will not implement some features in Fitbit and MyFitnessPal such as scanning grocery barcodes to see nutrition or stress and sleep management (probably a Nice-to-have feature if I have time). 
 
 # Requirement Analysis and Testing
-
-> (*This section should clearly describe all features/requirements that
-> you plan to implement or have implemented for your application. You
-> should separate them into three categories: essential, desirable and
-> optional.*
-
-*For each requirement/feature, you should provide the following
-details:*
-
-|                                              |     |
-|----------------------------------------------|-----|
-| *<span class="mark">Title</span>*            |     |
-| *<span class="mark">Description</span>*      |     |
-| *<span class="mark">Mockups</span>*          |     |
-| *<span class="mark">Acceptance tests</span>* |     |
-| *Test Results*                               |     |
-| *Status*                                     |     |
-
-*For example:*
 
 <table>
 <colgroup>
@@ -73,114 +40,204 @@ details:*
 <tbody>
 <tr class="odd">
 <td><em>Title (Essential/Desirable/Optional)</em></td>
-<td><em>View project details (Essential)</em></td>
+<td><em>Sign up, log in and view profile (Essential)</em></td>
 </tr>
 <tr class="even">
 <td><em>Description</em></td>
-<td><em>As a user, I want to view the details of a project so that I can
-have a better idea about that project.</em></td>
+<td><em>As a user, I want to be able to create an account so that I can see my customized content when I log in next time.</em></td>
 </tr>
 <tr class="odd">
 <td><em>Mockups</em></td>
-<td><em>You can put one or more mockups here.</em></td>
+<td><em></em></td>
 </tr>
 <tr class="even">
 <td><em>Acceptance tests</em></td>
-<td><p><em>Given a project list is shown on the screen,</em></p>
-<p><em>When the user clicks on one project on the list</em></p>
-<p><em>Then the project details will be displayed on the screen,
-including project title, brief description, implementation stack,
-authors, keywords, project links, etc.</em></p></td>
+<td><p><em>When the app is opened, user is required to log in using google account and no sign up is needed.</em></p>
+<p><em>After logging in, it will redirect to home page. There is a bottom navigation bar in the bottom of screen: Home and Profile page.</em></p>
+</td>
 </tr>
 <tr class="odd">
 <td><em>Test Results</em></td>
-<td><em>You can provide some screenshots of the execution
-result.</em></td>
+<td><em></em></td>
 </tr>
 <tr class="even">
 <td><em>Status</em></td>
-<td><p><em>Iteration 1: implemented the project detail UI page</em></p>
-<p><em>Iteration 2: Implemented User click event</em></p>
-<p><em>Iteration 3: Implemented project database.
-Completed.</em></p></td>
+<td><p><em>Iteration 1: Implement UI, setup cloud database for storing user info using firebase.</em></p>
+<p><em>Iteration 2: Implement navigation and user entity</em></p>
+</td>
 </tr>
 </tbody>
 </table>
 
-> *<span class="mark">In Iteration 0 (project planning phase), this
-> section should contain most essential features, some desirable
-> features and possibly a few optional features if you want. Each
-> feature listed in this section should have a <u>title</u> and a
-> <u>brief description</u>, preferably using the user story template “As
-> (a role)… I want (some feature), so that (value)...” . Each essential
-> feature should also have at least one <u>acceptance test</u>, and one
-> or multiple mockups if applicable.</span>*
->
-> *<span class="mark">(In later iterations (iteration 1 to 3), this
-> section should be updated to reflect your progress. In particular,
-> make sure to update the status row of each requirement. Highlight each
-> feature/requirement that you work on in the current iteration, you
-> should also provide some test results if it is completed or partially
-> completed.)</span>*
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><em>Title (Essential/Desirable/Optional)</em></td>
+<td><em>Weight record (Essential)</em></td>
+</tr>
+<tr class="even">
+<td><em>Description</em></td>
+<td><em>As a user, I want to be able to record my daily meals and work out so that the app can calculate calories consumption for me.</em></td>
+</tr>
+<tr class="odd">
+<td><em>Mockups</em></td>
+<td><em></em></td>
+</tr>
+<tr class="even">
+<td><em>Acceptance tests</em></td>
+<td>
+<p><em>Given a button (Record workout) on the home page.</em></p>
+<p><em>When user clicks Record weight, It will appear a bottomsheet that allow user to choose current weight. When user clicks save button, the weight and weight record will be updated and shown in the line chart.</em></p>
+</td>
+</tr>
+<tr class="odd">
+<td><em>Test Results</em></td>
+<td><em></em></td>
+</tr>
+<tr class="even">
+<td><em>Status</em></td>
+<td>
+<p><em>Iteration 1: Implement UI</em></p>
+<p><em>Iteration 2: Implement BottomSheet Content</em></p>
+<p><em>Iteration 3: Implement Weight Record Line Chart and database Storage</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><em>Title (Essential/Desirable/Optional)</em></td>
+<td><em>Workout record (Essential)</em></td>
+</tr>
+<tr class="even">
+<td><em>Description</em></td>
+<td><em>As a user, I want to be able to record my daily meals and work out so that the app can calculate calories consumption for me.</em></td>
+</tr>
+<tr class="odd">
+<td><em>Mockups</em></td>
+<td><em></em></td>
+</tr>
+<tr class="even">
+<td><em>Acceptance tests</em></td>
+<td>
+<p><em>Given a button (Record workout) on the home page.</em></p>
+<p><em>When user clicks Record workout, it will appear a list of workouts, and when the user clicks one of workout in the list, the user then has to choose time of workout, and it will write record in user’s data. Also in the work out page, user can use search bar to search for their desirable activity</em></p>
+</td>
+</tr>
+<tr class="odd">
+<td><em>Test Results</em></td>
+<td><em></em></td>
+</tr>
+<tr class="even">
+<td><em>Status</em></td>
+<td>
+<p><em>Iteration 1: Implement UI</em></p>
+<p><em>Iteration 2: Implement work out page, import datasets into firebase database.</em></p>
+<p><em>Iteration 3: Implement BottomSheet Content, search bar and database storage</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><em>Title (Essential/Desirable/Optional)</em></td>
+<td><em>Set personal physical indicator (Essential)</em></td>
+</tr>
+<tr class="even">
+<td><em>Description</em></td>
+<td><em>As a user, I want to record my physical indicators such as weight, height, BMI, body fat etc so that I can keep track of my health status.</em></td>
+</tr>
+<tr class="odd">
+<td><em>Mockups</em></td>
+<td><em></em></td>
+</tr>
+<tr class="even">
+<td><em>Acceptance tests</em></td>
+<td>
+<p><em>Given the button, set a physical indicator in the profile page.</em></p>
+<p><em>When a user clicks it, it will redirect to a form for the user to fill. When the user clicks the submit button, the data will be written in the user's record.</em></p>
+</td>
+</tr>
+<tr class="odd">
+<td><em>Test Results</em></td>
+<td><em></em></td>
+</tr>
+<tr class="even">
+<td><em>Status</em></td>
+<td>
+<p><em>Iteration 1: </em></p>
+<p><em>Iteration 2: Implement UI</em></p>
+<p><em>Iteration 3: Implemented personal info page including setting dob, age, height, weight</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><em>Title (Essential/Desirable/Optional)</em></td>
+<td><em>Physical indicator dashboard (Desirable)</em></td>
+</tr>
+<tr class="even">
+<td><em>Description</em></td>
+<td><em>As a user, I want to see a dashboard that demonstrates changes in my physical indicators so that I can see my training or diet progress.</em></td>
+</tr>
+<tr class="odd">
+<td><em>Mockups</em></td>
+<td><em></em></td>
+</tr>
+<tr class="even">
+<td><em>Acceptance tests</em></td>
+<td>
+<p><em>When user change their personal indicator such as height, weight, the body fat, bmi and metabolism will change accordingly. And when user record weight or record work out, the stats will be updated.</em></p>
+</td>
+</tr>
+<tr class="odd">
+<td><em>Test Results</em></td>
+<td><em></em></td>
+</tr>
+<tr class="even">
+<td><em>Status</em></td>
+<td>
+<p><em>Iteration 1: </em></p>
+<p><em>Iteration 2: Implement UI, implement my stats fetch functions.</em></p>
+<p><em>Iteration 3: Implement fetch BMI, bodyfat and metabolism functions</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+
 
 # Design and Implementation
 
-> (*This section should describe the basic architecture (e.g. MVC, or
-> MVVM) and your detailed design and implementation. This section may
-> contain the following aspects:*
 
-- *Basic architecture*
-
-- *UI design and implementation*
-
-  - *Activities, fragments, special widgets, etc*
-
-- *Other android features*
-
-  - *Service, sensors, animations, etc*
-
-- *Third party APIs*
-
-- *Data Design and implementation*
-
-  - *Database schema, data storage*
-
-- *Algorithms*
-
-- *…*
-
-> *<span class="mark">In iteration 0, you can provide an overview or
-> simply list some basic implementation features.</span>*
->
-> <span class="mark">*In later iterations, this section should be
-> updated to provide detailed explanation on how you implement your
-> requirements. You shall provide some explanation as well as supporting
-> evidence, such as sample code snippets (or the file name and line
-> numbers of code. In particular, if you used any features that are not
-> discussed in the class, provide a detailed explanation here.* )</span>
 
 # Project Structure
 
-> (*Please provide a screenshot(s) of your current project structure,
-> which should show all the packages, kotlin/java files and resource
-> files in your project. You should also <u>highlight any files/packages
-> you have changed, added/deleted in this iteration compared with the
-> previous iteration</u>. <span class="mark">This is not needed for
-> iteration 0</span>*)
+
 
 # Timeline
-
-> (*Please provide a summary of the requirements implemented and
-> Android/third party components used in the past and current
-> iterations, and the plan in the future iteration.
-> <span class="mark">This is needed for every iteration including
-> iteration 0.</span> In your iteration 0, you will give a plan for all
-> future iterations. In later iterations, you shall update it according
-> to your progress such as describe what you have implemented in current
-> iteration and modify the future iteration plan accordingly. The last
-> two columns on the right are only needed if your project is a group
-> project. <span class="mark"></span>*)
-
 <table>
 <colgroup>
 <col style="width: 9%" />
@@ -192,59 +249,36 @@ Completed.</em></p></td>
 <tbody>
 <tr class="odd">
 <td>Iteration</td>
-<td><p>Application Requirements</p>
-<p>(Essential/Desirable/Optional)</p></td>
+<td><p>Application Requirements</p><p>(Essential/Desirable/Optional)</p></td>
 <td>Android Components and Features to be used</td>
-<td>Member 1 contribution/<br />
-planned tasks</td>
-<td>Member 2 contribution/<br />
-planned tasks</td>
 </tr>
 <tr class="even">
 <td>1</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Sign-up and login (Essential)<br />Record weight and workout (Essential)</td>
+<td>Login, Signup using firebase authentication.<br />UI Elements: Login, signup, profile, and home page, and Weight Record composable (including line chart).<br />Database: Cloud Database for storing user’s personal information using firebase real-time database.</td>
 </tr>
 <tr class="odd">
 <td>2</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Physical indicator dashboard (Desirable)<br />Record weight and workout (Essential)</td>
+<td>Personal Info screen and bottomsheet layout to set personal information.<br />Database: create weight record in database and implement fetch function for weight record line chart.<br />Implement physical indicator dashboard showing bmi, bodyfat and metabolism based on personal information such as weight and height.</td>
 </tr>
 <tr class="even">
 <td>3</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Record weight and workout (Essential)</td>
+<td>Database: Import activity calorie burned datasets into firebase real-time database.<br />Implement Work out screen: Creating activity list from work-out database.<br />Implement search bar in work-out screen.<br />Implement bottomsheet in work-out screen.<br />Implement My stats in profile screen.</td>
 </tr>
 </tbody>
 </table>
 
+
 # Future Work (Optional)
 
-> (*This section can describe possible future works. Particularly the
-> requirements you planned but didn’t get time to implement, and
-> possible Android components or features to implement them.*
->
-> *This section is optional, and you can include this section in the
-> final iteration if you want.*)
+There are several things I can in the future. First, the diet feature has not been implemented yet. The diet feature requires nutrition datasets and enable user to record their diet and app will show nutrition consumptions in the dashboard. Also, it is also possible to implement google fit API to keep track of users’ steps and sleep. Another future work will be implementing customized content for different type of user and generate work-out and diet recommendation. This requires a lot of works including rebuild the structure of user entity and include different contents for different types of users in the database. 
 
 # Project Demo Links
 
-> (*For on campus students, we will have project presentations in class.
-> <span class="mark">For online students, you are required to submit a
-> video of your project presentation which includes a demo of your app
-> and explanation of your implementation.</span> You can use Kaltura or
-> zoom or any video tool to make the video and then submit it on
-> blackboard. Please check the following link for the details of using
-> Kaltura to make and submit videos on blackboard. You can also use
-> other video tools and upload your video to youtube if you like:
-> [<u>https://onlinecampus.bu.edu/bbcswebdav/courses/00cwr_odeelements/metcs/cs_Kaltura.htm</u>](https://onlinecampus.bu.edu/bbcswebdav/pid-523716-dt-announcement-rid-19162119_1/xid-19162119_1)*
-> )
 
-1.  References  
-    (*any references you used for the project*)
+# References  
+MPAndroid Chart: https://github.com/PhilJay/MPAndroidChart
+Work out Datasets: https://www.kaggle.com/datasets/a5ee8b9d770e65ca566f73016e860e693b7d966a8fa0f24137942a380ce4fc84
+
