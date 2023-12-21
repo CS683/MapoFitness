@@ -42,11 +42,7 @@
 
 # Related Work
 
-> (*This section should describe some similar applications that you find
-> through online research. It should describe the similarities and
-> differences between your application and those applications.
-> <span class="mark">This section should be completed in iteration 0 as
-> part of your proposal. It can be modified in later iterations</span>*)
+The application I want to develop is a fitness and nutrition app. The reason that I want to do this is because I work out a lot and I would like to track my nutrition consumption, calories consumption, physical indicator and work out records etc. However, applications on the market do not fully fulfill my requirements. The target customers of most applications are for normal people instead of athletes or advanced bodybuilders, so for my application, my target customers would be both normal people, bodybuilders, and vegan if I implement the diet feature. 
 
 # Requirement Analysis and Testing
 
